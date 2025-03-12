@@ -5,6 +5,7 @@ import {
   TextInput,
   Switch,
   Modal,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
@@ -160,7 +161,9 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
           </Modal>
         </>
       ) : (
-        <Text className="mt-4 text-gray-100 text-lg">Loading...</Text>
+        <View className="flex-1 justify-center items-center">
+          <ActivityIndicator size="large" color="blue" />
+        </View>
       )}
     </View>
   );
