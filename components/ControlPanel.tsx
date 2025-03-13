@@ -8,6 +8,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import LottieView from "lottie-react-native";
+
 import {
   getDetails,
   changeFlag,
@@ -16,6 +18,10 @@ import {
   DeviceDetails,
   OutputDevice,
 } from "@/lib/firebase";
+
+import treeAnimation from "@/assets/animations/tree.json";
+import dripAnimation from "@/assets/animations/drip.json";
+import sprinklerAnimation from "@/assets/animations/sprink.json";
 
 interface ControlPanelProps {
   deviceId: OutputDevice;
@@ -66,10 +72,35 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-gradient-to-b from-blue-500 to-blue-800 px-6 bg-gray-200">
-      <Text className="text-3xl font-extrabold mb-6 text-gray-600">
+    <View className="flex-1 items-center justify-center bg-gray-200 px-6">
+      <Text className="text-3xl font-extrabold mb-4 text-gray-600">
         {title}
       </Text>
+
+      <View className="">
+        {/* Background Tree Animation (Always Visible) */}
+        <LottieView
+          source={treeAnimation}
+          autoPlay
+          loop
+          style={{ width: 250, height: 250 }}
+        />
+        {/* Sprinkler or Drip Animation (Visible Only When ON) */}
+        {details?.flag === 1 && (
+          <LottieView
+            source={deviceId === "s" ? sprinklerAnimation : dripAnimation}
+            autoPlay
+            loop
+            style={{
+              width: 200,
+              height: 200,
+              position: "absolute",
+              right: 100,
+              bottom: 0,
+            }}
+          />
+        )}
+      </View>
 
       {details ? (
         <>
@@ -86,34 +117,20 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
             />
           </View>
 
-          {/* Status Indicator */}
-          <View
-            className={`w-44 h-44 rounded-full flex items-center justify-center shadow-xl mb-6 border-4 ${
+          {/* Toggle Button (Big Round Button) */}
+          <TouchableOpacity
+            onPress={toggleFlag}
+            disabled={details.auto === 1}
+            className={`w-44 h-44 rounded-full flex items-center justify-center shadow-xl border-4 ${
               details.flag === 1
                 ? "bg-green-500 border-green-300"
                 : "bg-red-500 border-red-300"
-            }`}
+            } ${details.auto === 1 ? "opacity-50" : ""}`}
           >
             <Text className="text-white text-3xl font-extrabold">
               {details.flag === 1 ? "ON" : "OFF"}
             </Text>
-          </View>
-
-          {/* Toggle Button (Only for Manual Mode) */}
-          {details.auto === 0 && (
-            <TouchableOpacity
-              onPress={toggleFlag}
-              className="bg-white px-8 py-4 rounded-full shadow-lg"
-            >
-              <Text
-                className={`text-xl font-semibold ${
-                  details.flag === 1 ? "text-red-500" : "text-green-500"
-                }`}
-              >
-                {details.flag === 1 ? "Turn OFF" : "Turn ON"}
-              </Text>
-            </TouchableOpacity>
-          )}
+          </TouchableOpacity>
 
           {/* Min/Max Value Modal */}
           <Modal visible={isModalVisible} animationType="fade" transparent>
