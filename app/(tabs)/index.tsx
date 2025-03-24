@@ -29,9 +29,9 @@ const Home = () => {
       ) : (
         <FlatList
           data={readings}
-          keyExtractor={(item) => item.id} // No need for .toString()
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <ReadingCard item={item} />}
-          contentContainerStyle={{ padding: 16 }} // Adds padding to items
+          contentContainerStyle={{ padding: 16 }}
         />
       )}
     </SafeAreaView>

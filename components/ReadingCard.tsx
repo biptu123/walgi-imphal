@@ -46,15 +46,15 @@ const ReadingCard = ({ item }: { item: Reading }) => {
     >
       <Animated.View
         style={animatedStyle}
-        className="p-4 bg-white rounded-xl shadow-lg border border-gray-200"
+        className="p-4 bg-white rounded-3xl shadow-lg border border-gray-200"
       >
-        <Text className="text-xl text-gray-700 font-extrabold text-center mb-2">
+        <Text className="text-xl text-gray-700 font-[JosefinSans-Bold] text-center mb-2">
           DEVICE: {item.id}
         </Text>
 
         {/* Temperature Section */}
         <View className="mb-3">
-          <Text className="text-lg font-semibold text-gray-800">
+          <Text className="text-lg font-[JosefinSans-SemiBold] text-gray-800">
             🌡 Temperature: {item.t}°C
           </Text>
           <ReadingBar value={item.t} type="temperature" />
@@ -62,7 +62,7 @@ const ReadingCard = ({ item }: { item: Reading }) => {
 
         {/* Humidity Section */}
         <View className="mb-3">
-          <Text className="text-lg font-semibold text-blue-500">
+          <Text className="text-lg font-[JosefinSans-SemiBold] text-gray-800">
             💧 Humidity: {item.h}%
           </Text>
           <ReadingBar value={item.h} type="humidity" />
@@ -70,7 +70,7 @@ const ReadingCard = ({ item }: { item: Reading }) => {
 
         {/* Moisture Section */}
         <View>
-          <Text className="text-lg font-semibold text-green-500">
+          <Text className="text-lg font-[JosefinSans-SemiBold] text-gray-800">
             🌱 Soil Moisture: {item.s}%
           </Text>
           <ReadingBar value={item.s} type="moisture" />

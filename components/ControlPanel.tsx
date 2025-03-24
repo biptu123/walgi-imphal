@@ -22,6 +22,7 @@ import {
 import treeAnimation from "@/assets/animations/tree.json";
 import dripAnimation from "@/assets/animations/drip.json";
 import sprinklerAnimation from "@/assets/animations/sprink.json";
+import clsx from "clsx";
 
 interface ControlPanelProps {
   deviceId: OutputDevice;
@@ -73,7 +74,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
 
   return (
     <View className="flex-1 items-center justify-center bg-gray-200 px-6">
-      <Text className="text-3xl font-extrabold mb-4 text-gray-600">
+      <Text className="text-3xl font-[JosefinSans-Bold] mb-4 text-gray-600">
         {title}
       </Text>
 
@@ -105,10 +106,18 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
       {details ? (
         <>
           {/* Auto Mode Toggle */}
-          <View className="w-full flex-row items-center justify-between bg-white px-6 py-4 rounded-xl shadow-lg mb-6">
-            <Text className="text-lg font-semibold text-gray-900">
-              Auto Mode
-            </Text>
+          <View className="h-[50] w-full flex-row items-center justify-between bg-white  rounded-xl shadow-lg mb-6 overflow-hidden">
+            <View className="h-full flex-row items-center gap-2">
+              <View
+                className={clsx("h-full w-[80] rounded-xl", {
+                  "bg-green-500": details.flag === 1,
+                  "bg-red-500": details.flag === 0,
+                })}
+              />
+              <Text className="text-lg font-[JosefinSans-SemiBold] text-gray-900">
+                Auto Mode
+              </Text>
+            </View>
             <Switch
               value={details.auto === 1}
               onValueChange={handleAutoModeToggle}
@@ -121,13 +130,16 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
           <TouchableOpacity
             onPress={toggleFlag}
             disabled={details.auto === 1}
-            className={`w-44 h-44 rounded-full flex items-center justify-center shadow-xl border-4 ${
-              details.flag === 1
-                ? "bg-green-500 border-green-300"
-                : "bg-red-500 border-red-300"
-            } ${details.auto === 1 ? "opacity-50" : ""}`}
+            className={clsx(
+              "w-44 h-44 rounded-full flex items-center justify-center shadow-xl border-4",
+              {
+                "bg-green-500 border-green-300": details.flag === 1,
+                "bg-red-500 border-red-300": details.flag === 0,
+                "opacity-50": details.auto === 1,
+              }
+            )}
           >
-            <Text className="text-white text-3xl font-extrabold">
+            <Text className="text-white text-3xl font-[JosefinSans-Bold]">
               {details.flag === 1 ? "ON" : "OFF"}
             </Text>
           </TouchableOpacity>

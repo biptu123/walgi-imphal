@@ -61,7 +61,7 @@ const ReadingBar = ({
   }));
 
   return (
-    <View className="w-full h-6 bg-gray-300 rounded-full overflow-hidden mt-2">
+    <View className="w-full h-2 bg-gray-300 rounded-full overflow-hidden mt-2">
       <Animated.View
         style={animatedStyle}
         className={`h-full ${getColor(value, type)}`}
