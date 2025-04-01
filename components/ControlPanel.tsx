@@ -73,8 +73,8 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-gray-200 px-6">
-      <Text className="text-3xl font-[JosefinSans-Bold] mb-4 text-gray-600">
+    <View className="flex items-center justify-center px-6">
+      <Text className="text-3xl font-[Helvetica-ExtraBold] mb-4 text-gray-600">
         {title}
       </Text>
 
@@ -114,7 +114,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
                   "bg-red-500": details.flag === 0,
                 })}
               />
-              <Text className="text-lg font-[JosefinSans-SemiBold] text-gray-900">
+              <Text className="text-lg font-[Helvetica-Bold] text-gray-900">
                 Auto Mode
               </Text>
             </View>
@@ -139,7 +139,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
               }
             )}
           >
-            <Text className="text-white text-3xl font-[JosefinSans-Bold]">
+            <Text className="text-white text-3xl font-[Helvetica-Bold]">
               {details.flag === 1 ? "ON" : "OFF"}
             </Text>
           </TouchableOpacity>
@@ -172,17 +172,13 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
                     onPress={() => setModalVisible(false)}
                     className="bg-gray-400 px-5 py-3 rounded-full"
                   >
-                    <Text className="text-white text-lg font-semibold">
-                      Cancel
-                    </Text>
+                    <Text className="text-white text-lg font-bold">Cancel</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={applyMinMax}
                     className="bg-blue-600 px-5 py-3 rounded-full"
                   >
-                    <Text className="text-white text-lg font-semibold">
-                      Apply
-                    </Text>
+                    <Text className="text-white text-lg font-bold">Apply</Text>
                   </TouchableOpacity>
                 </View>
               </View>

@@ -16,17 +16,20 @@ export type DeviceDetails = {
 };
 export type Flag = 0 | 1; // 0 => Off, 1 => On
 export type Mode = 0 | 1; // 1 => Auto, 0 => Manual
-export type OutputDevice = "s" | "d"; // s => Sprinkler, d => Dripper
+export type OutputDevice = "s" | "d" | "l1" | "l2" | "l3" | "l4"; // s => Sprinkler, d => Dripper, l1,l2 => Sprinkler lights, l3,l4 => Dripper lights
 
 // ✅ Use update() to modify multiple values at once
 export async function changeFlag(
   device: OutputDevice,
   flag: Flag,
-  max: number,
-  min: number
+  max: number | null,
+  min: number | null
 ) {
   try {
-    await update(ref(db, `config/${device}`), { flag, max, min });
+    await update(ref(db, `config/${device}`), {
+      flag,
+      ...(max && min ? { max, min } : {}),
+    });
   } catch (error) {
     console.error("Error updating flag:", error);
   }

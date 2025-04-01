@@ -77,7 +77,7 @@ const Tabbar: React.FC<BottomTabBarProps> = ({
             <Text
               className={clsx(
                 "text-gray-600 text-sm",
-                isFocused && "text-blue-600 font-semibold"
+                isFocused && "text-blue-600 font-[Helvetica-Bold]"
               )}
             >
               {label}
