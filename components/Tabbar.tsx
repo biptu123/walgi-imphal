@@ -28,7 +28,7 @@ const Tabbar: React.FC<BottomTabBarProps> = ({
   navigation,
 }) => {
   return (
-    <View className="flex flex-row absolute bottom-6 justify-between items-center bg-white mx-5 py-4 rounded-full shadow-[0px_10px_10px_rgba(0,0,0,0.1)]">
+    <View className="flex flex-row absolute bottom-6 justify-between items-center bg-gray-900 mx-5 py-4 rounded-full shadow-[0px_10px_10px_rgba(0,0,0,0.1)]">
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label: string =
@@ -72,12 +72,12 @@ const Tabbar: React.FC<BottomTabBarProps> = ({
           >
             {icons[route.name as TabRoutes]?.({
               size: 24,
-              color: isFocused ? "blue" : "gray",
+              color: isFocused ? "yellow" : "white",
             })}
             <Text
               className={clsx(
-                "text-gray-600 text-sm",
-                isFocused && "text-blue-600 font-[Helvetica-Bold]"
+                "text-gray-200 text-sm",
+                isFocused && "text-yellow-600 font-[Helvetica-Bold]"
               )}
             >
               {label}

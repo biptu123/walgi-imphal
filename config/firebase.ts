@@ -2,14 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDru_CzfWaZhRwMvLI-7Otp01FwbncpwEI",
-  authDomain: "smart-agri-f6793.firebaseapp.com",
-  databaseURL: "https://smart-agri-f6793-default-rtdb.firebaseio.com",
-  projectId: "smart-agri-f6793",
-  storageBucket: "smart-agri-f6793.firebasestorage.app",
-  messagingSenderId: "370684752249",
-  appId: "1:370684752249:web:88985c2c6adeed16093fa8",
-  measurementId: "G-CEG0PJRWEX",
+  apiKey: "AIzaSyCWQNQHd4QwmDQ98h8s6DKIGw5HlEaBA0s",
+  authDomain: "selco-kharupetia.firebaseapp.com",
+  databaseURL: "https://selco-kharupetia-default-rtdb.firebaseio.com",
+  projectId: "selco-kharupetia",
+  storageBucket: "selco-kharupetia.firebasestorage.app",
+  messagingSenderId: "318256630437",
+  appId: "1:318256630437:web:37ba29f879748a831c5b4c",
+  measurementId: "G-8G89KNYJJ4",
 };
 
 const app = initializeApp(firebaseConfig);
