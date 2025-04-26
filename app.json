@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Walgi",
-    "slug": "walgi",
+    "name": "Walgi Imphal",
+    "slug": "walgi-imphal",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,7 +16,11 @@
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.biptu.walgi"
+      "package": "com.biptu.walgiimphal",
+      "permissions": [
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -49,7 +53,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "4684991a-28fc-4004-9a44-60f401927de8"
+        "projectId": "ba3a2d90-6a45-44aa-b1a2-ab6926bce32f"
       }
     }
   }
