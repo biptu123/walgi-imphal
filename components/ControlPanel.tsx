@@ -7,38 +7,26 @@ import {
   Modal,
   ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LottieView from "lottie-react-native";
-
-import {
-  getDetails,
-  changeFlag,
-  changeMode,
-  stopDetailsListener,
-  DeviceDetails,
-  OutputDevice,
-} from "@/lib/firebase";
+import clsx from "clsx";
 
 import treeAnimation from "@/assets/animations/tree.json";
 import dripAnimation from "@/assets/animations/drip.json";
 import sprinklerAnimation from "@/assets/animations/sprink.json";
-import clsx from "clsx";
-
+import { OutputDevice, useFirebase } from "@/context/FirebaseContext";
 interface ControlPanelProps {
   deviceId: OutputDevice;
   title: string;
 }
 
 const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
-  const [details, setDetails] = useState<DeviceDetails | null>(null);
+  const { deviceDetails, changeFlag, changeMode } = useFirebase();
+  const details = deviceDetails[deviceId]; // ✅ Get details from context
+
   const [minValue, setMinValue] = useState("");
   const [maxValue, setMaxValue] = useState("");
   const [isModalVisible, setModalVisible] = useState(false);
-
-  useEffect(() => {
-    getDetails(deviceId, setDetails);
-    return () => stopDetailsListener(deviceId);
-  }, [deviceId]);
 
   const toggleFlag = () => {
     if (details && details.auto === 0) {
@@ -78,15 +66,15 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
         {title}
       </Text>
 
-      <View className="">
-        {/* Background Tree Animation (Always Visible) */}
+      <View>
+        {/* Background Tree Animation */}
         <LottieView
           source={treeAnimation}
           autoPlay
           loop
           style={{ width: 250, height: 250 }}
         />
-        {/* Sprinkler or Drip Animation (Visible Only When ON) */}
+        {/* Sprinkler or Drip Animation (Only When ON) */}
         {details?.flag === 1 && (
           <LottieView
             source={deviceId === "s" ? sprinklerAnimation : dripAnimation}
@@ -106,18 +94,10 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
       {details ? (
         <>
           {/* Auto Mode Toggle */}
-          <View className="h-[50] w-full flex-row items-center justify-between bg-white  rounded-xl shadow-lg mb-6 overflow-hidden">
-            <View className="h-full flex-row items-center gap-2">
-              <View
-                className={clsx("h-full w-[80] rounded-xl", {
-                  "bg-green-500": details.flag === 1,
-                  "bg-red-500": details.flag === 0,
-                })}
-              />
-              <Text className="text-lg font-[Helvetica-Bold] text-gray-900">
-                Auto Mode
-              </Text>
-            </View>
+          <View className="h-[60] w-full flex-row items-center justify-between bg-white rounded-xl shadow-lg mb-6 overflow-hidden">
+            <Text className="text-lg font-[Helvetica-Bold] text-gray-900 ml-4">
+              Auto Mode
+            </Text>
             <Switch
               value={details.auto === 1}
               onValueChange={handleAutoModeToggle}
@@ -126,12 +106,12 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ deviceId, title }) => {
             />
           </View>
 
-          {/* Toggle Button (Big Round Button) */}
+          {/* Toggle Button */}
           <TouchableOpacity
             onPress={toggleFlag}
             disabled={details.auto === 1}
             className={clsx(
-              "w-44 h-44 rounded-full flex items-center justify-center shadow-xl border-4",
+              "w-full h-[100px] rounded-3xl flex items-center justify-center shadow-xl border-4",
               {
                 "bg-green-500 border-green-300": details.flag === 1,
                 "bg-red-500 border-red-300": details.flag === 0,

@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import CustomSplashScreen from "@/components/SplashScreen";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { UserInActivityProvider } from "@/context/UserInActivity";
+import { FirebaseProvider } from "@/context/FirebaseContext";
+import { NavigationContainer } from "@react-navigation/native";
 
 const RootLayout = () => {
   const [appReady, setAppReady] = useState(false);
@@ -43,12 +45,17 @@ const RootLayout = () => {
 
   return (
     <UserInActivityProvider>
-      <Animated.View entering={FadeIn} style={{ flex: 1 }}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(modals)/lock" options={{ headerShown: false }} />
-        </Stack>
-      </Animated.View>
+      <FirebaseProvider>
+        <Animated.View entering={FadeIn} style={{ flex: 1 }}>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="(modals)/lock"
+              options={{ headerShown: false }}
+            />
+          </Stack>
+        </Animated.View>
+      </FirebaseProvider>
     </UserInActivityProvider>
   );
 };
