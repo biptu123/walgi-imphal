@@ -5,9 +5,10 @@ import clsx from "clsx";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 // Define valid route names for better TypeScript safety
-type TabRoutes = "index" | "about" | "drip" | "sprinkler";
+type TabRoutes = "index" | "about" | "drip" | "sprinkler" | "shade";
 
 // Define icon props type
 type IconProps = { size?: number; color?: string };
@@ -20,6 +21,7 @@ const icons: Record<TabRoutes, (props: IconProps) => JSX.Element> = {
   sprinkler: (props) => (
     <MaterialCommunityIcons name="sprinkler-variant" {...props} />
   ),
+  shade: (props) => <MaterialIcons name="roller-shades" {...props} />,
 };
 
 const Tabbar: React.FC<BottomTabBarProps> = ({

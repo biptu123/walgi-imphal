@@ -13,6 +13,7 @@ const TabsLayout = () => {
       }}
     >
       <Tabs.Screen name="index" options={{ title: "Home" }} />
+      <Tabs.Screen name="shade" options={{ title: "Shade" }} />
       <Tabs.Screen name="drip" options={{ title: "Drip" }} />
       <Tabs.Screen name="sprinkler" options={{ title: "Sprinkler" }} />
       <Tabs.Screen name="about" options={{ title: "About" }} />
