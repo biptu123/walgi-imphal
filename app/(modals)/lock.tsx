@@ -32,8 +32,6 @@ const LockScreen = () => {
     const isEnrolled = await LocalAuthentication.isEnrolledAsync();
 
     if (!hasHardware || !isEnrolled) {
-      console.log("⚠️ No biometrics available. Using device lock instead.");
-
       // Try using the device's default lock screen
       const result = await LocalAuthentication.authenticateAsync({
         promptMessage: "Unlock App",

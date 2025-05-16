@@ -34,7 +34,7 @@ const WeatherCard = () => {
   const fetchWeather = async () => {
     try {
       const response = await fetch(
-        "http://api.weatherapi.com/v1/current.json?key=33bfbcb874f84e2da32202902250704&q=26.5255581,92.1670445"
+        "https://api.weatherapi.com/v1/current.json?key=33bfbcb874f84e2da32202902250704&q=23.388553, 93.148487"
       );
       const data = await response.json();
 
@@ -74,54 +74,64 @@ const WeatherCard = () => {
     loadWeather();
   }, []);
 
-  if (!weather) return null;
+  const renderText = (text: string, loadingFallback: string = "----") =>
+    loading ? loadingFallback : text;
 
   return (
-    <View className="bg-white/90 rounded-2xl shadow-lg p-4 m-4 space-y-2">
+    <View className="bg-white/90 rounded-2xl shadow-lg py-2 px-4 ">
       <Text className="text-xl font-bold text-gray-800">
-        {weather.location.name}, {weather.location.region}
+        {renderText(
+          `${weather?.location.name || ""}, ${weather?.location.region || ""}`
+        )}
       </Text>
 
-      <View className="flex-row items-center space-x-4">
-        <Image
-          source={{ uri: "https:" + weather.current.condition.icon }}
-          style={{ width: 64, height: 64 }}
-        />
+      <View className="flex-row items-center mt-1">
+        {loading ? (
+          <View className="w-[60px] h-[60px] bg-gray-200 rounded-full mr-2" />
+        ) : (
+          <Image
+            source={{ uri: "https:" + weather?.current.condition.icon }}
+            style={{ width: 60, height: 60 }}
+          />
+        )}
+
         <View>
           <Text className="text-3xl font-semibold text-blue-600">
-            {weather.current.temp_c}°C
+            {loading ? "--°C" : `${weather?.current.temp_c}°C`}
           </Text>
           <Text className="text-sm text-gray-500">
-            {weather.current.condition.text}
+            {loading ? "Loading..." : weather?.current.condition.text}
           </Text>
         </View>
       </View>
 
-      <View className="flex-row justify-between mt-2">
+      <View className="flex-row justify-between mt-1">
         <View className="flex-row items-center space-x-1">
           <Feather name="wind" size={18} color="gray" />
           <Text className="text-gray-600 text-sm">
-            {weather.current.wind_kph} kph
+            {loading ? "-- kph" : `${weather?.current.wind_kph} kph`}
           </Text>
         </View>
 
         <View className="flex-row items-center space-x-1">
           <Feather name="droplet" size={18} color="gray" />
           <Text className="text-gray-600 text-sm">
-            {weather.current.humidity}%
+            {loading ? "--%" : `${weather?.current.humidity}%`}
           </Text>
         </View>
 
         <View className="flex-row items-center space-x-1">
           <Feather name="thermometer" size={18} color="gray" />
           <Text className="text-gray-600 text-sm">
-            Feels like {weather.current.feelslike_c}°C
+            {loading
+              ? "Feels like --°C"
+              : `Feels like ${weather?.current.feelslike_c}°C`}
           </Text>
         </View>
       </View>
 
       <Text className="text-xs text-gray-400 mt-2">
-        Last updated: {weather.location.localtime}
+        Last updated: {loading ? "--:--" : weather?.location.localtime}
       </Text>
     </View>
   );

@@ -1,77 +1,69 @@
+import React from "react";
 import {
-  View,
-  Text,
-  ActivityIndicator,
-  FlatList,
-  StatusBar,
+  Image,
+  SafeAreaView,
   ScrollView,
+  StatusBar,
+  Text,
+  View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useFirebase } from "@/context/FirebaseContext";
-import ReadingCard from "@/components/ReadingCard";
-import ReadingSkeleton from "@/components/ReadingSkeleton";
+import polyhouseImage from "@/assets/images/polyhouse.png";
+import waveImage from "@/assets/images/wave.png";
 import WeatherCard from "@/components/WeatherCard";
+import SoilmoistureReadings from "@/components/SoilmoistureReadings";
+import TemperatureReading from "@/components/TemperatureReading";
+import HumidityReading from "@/components/HumidityReading";
+import CameraController from "@/components/CameraController";
 
-const Home = () => {
-  const [greeting, setGreeting] = useState(getGreeting());
-  const { readings } = useFirebase();
-  // console.log(readings);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setGreeting(getGreeting());
-    }, 1000 * 60); // Update every minute
-
-    return () => clearInterval(interval); // Cleanup
-  }, []);
-
-  function getGreeting() {
-    const hour = new Date().getHours();
-    if (hour < 12) {
-      return "Good Morning";
-    } else if (hour < 18) {
-      return "Good Afternoon";
-    } else {
-      return "Good Evening";
-    }
-  }
+export default function IndexScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-gray-200">
-      <StatusBar barStyle="dark-content" className="bg-gray-200" />
-      {/* Greeting */}
-      <View className="w-full flex flex-row justify-center gap-2 mt-7">
-        <Text className="text-3xl font-helvetica-bold">{greeting}</Text>
-        <Text className="text-3xl font-helvetica-extraBold color-[#D80D73]">
-          HABIBAR!
-        </Text>
+    <SafeAreaView className="flex-1 bg-[#a89b93]">
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
+
+      {/* Header background layer (absolute) */}
+      <View className="absolute top-0 left-0 w-full">
+        {/* Wave image */}
+        <Image
+          source={waveImage}
+          className="w-full scale-x-[-1] h-64"
+          resizeMode="stretch"
+        />
+        {/* Text section */}
+        <View className="mx-6 -mt-20">
+          <Text className="text-white text-3xl font-helvetica-extraBold">
+            Hello Farmer
+          </Text>
+          <Text className="text-white text-3xl font-helvetica-extraBold">
+            Welcome Home
+          </Text>
+        </View>
+        {/* Polyhouse image */}
+        <Image
+          source={polyhouseImage}
+          className="w-[250px] aspect-[3/2] scale-x-[-1] absolute right-6 top-7"
+          resizeMode="contain"
+        />
       </View>
 
-      {readings.length === 0 ? (
-        <ReadingSkeleton />
-      ) : (
-        <FlatList
-          data={readings}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <ReadingCard item={item} />}
-          contentContainerStyle={{ paddingBottom: 100 }}
-          ListHeaderComponent={<WeatherCard />}
-        />
-      )}
+      {/* Scrollable Content */}
+      <ScrollView className="flex-1 px-6 pt-[23rem]">
+        <WeatherCard />
+        <View className="w-full flex-row justify-between gap-5 my-5 aspect-square">
+          <View className="flex-1">
+            <SoilmoistureReadings />
+          </View>
+          <View className="flex-1 gap-5">
+            <TemperatureReading />
+            <HumidityReading />
+          </View>
+        </View>
+        <CameraController />
+        <View className="h-[450px]"></View>
+      </ScrollView>
     </SafeAreaView>
   );
-};
-
-export default Home;
-
-const getGreeting = () => {
-  const hour = new Date().getHours();
-
-  if (hour < 12) {
-    return "Morning";
-  } else if (hour < 18) {
-    return "Afternoon";
-  } else {
-    return "Evening";
-  }
-};
+}

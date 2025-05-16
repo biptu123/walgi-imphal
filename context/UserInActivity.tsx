@@ -26,8 +26,6 @@ export const UserInActivityProvider = ({ children }: any) => {
   }, []);
 
   const handleAppStateChange = (nextAppState: AppStateStatus) => {
-    console.log("App State Changed:", appState.current, "→", nextAppState);
-
     if (nextAppState === "background") {
       recordStartTime();
     } else if (nextAppState === "active" && appState.current === "background") {
@@ -53,7 +51,6 @@ export const UserInActivityProvider = ({ children }: any) => {
       !wasUnlocked ||
       (lastUnlockTime && Date.now() - lastUnlockTime >= LOCK_TIME)
     ) {
-      console.log("🔒 Locking screen on first launch...");
       router.replace("/(modals)/lock");
     }
   };

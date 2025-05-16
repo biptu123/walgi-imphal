@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import CustomSplashScreen from "@/components/SplashScreen";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { UserInActivityProvider } from "@/context/UserInActivity";
-import { FirebaseProvider } from "@/context/FirebaseContext";
 import { NavigationContainer } from "@react-navigation/native";
+import { Partition1Provider } from "@/context/firebase/Partition1Context";
+import { Partition2Provider } from "@/context/firebase/Partition2Context";
+import { Partition3Provider } from "@/context/firebase/Partition3Context";
 
 const RootLayout = () => {
   const [appReady, setAppReady] = useState(false);
@@ -30,33 +32,41 @@ const RootLayout = () => {
 
   if (!loaded && !error) return null;
 
-  if (!appReady || !splashAnimationFinished) {
-    return (
-      <CustomSplashScreen
-        onAnimationFinish={(isCancelled) => {
-          console.warn("Animation finished");
-          if (!isCancelled) {
-            setSplashAnimationFinished(true);
-          }
-        }}
-      />
-    );
-  }
+  // if (!appReady || !splashAnimationFinished) {
+  //   return (
+  //     <CustomSplashScreen
+  //       onAnimationFinish={(isCancelled) => {
+  //         console.warn("Animation finished");
+  //         if (!isCancelled) {
+  //           setSplashAnimationFinished(true);
+  //         }
+  //       }}
+  //     />
+  //   );
+  // }
 
   return (
-    <UserInActivityProvider>
-      <FirebaseProvider>
-        <Animated.View entering={FadeIn} style={{ flex: 1 }}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="(modals)/lock"
-              options={{ headerShown: false }}
-            />
-          </Stack>
-        </Animated.View>
-      </FirebaseProvider>
-    </UserInActivityProvider>
+    // <UserInActivityProvider>
+    <Partition1Provider>
+      <Partition2Provider>
+        <Partition3Provider>
+          <Animated.View entering={FadeIn} style={{ flex: 1 }}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(modals)"
+                options={{
+                  headerShown: false,
+                  title: "",
+                  presentation: "modal",
+                }}
+              />
+            </Stack>
+          </Animated.View>
+        </Partition3Provider>
+      </Partition2Provider>
+    </Partition1Provider>
+    // </UserInActivityProvider>
   );
 };
 

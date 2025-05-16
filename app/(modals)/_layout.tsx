@@ -1,0 +1,16 @@
+// app/(modals)/_layout.tsx
+import { Stack } from "expo-router";
+
+export default function ModalLayout() {
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        presentation: "modal",
+      }}
+    >
+      <Stack.Screen name="lock" />
+      <Stack.Screen name="group" />
+    </Stack>
+  );
+}
